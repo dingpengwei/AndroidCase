@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <string name="app_name_android_case">AndroidCase</string>
+    <string name="action_settings">Settings</string>
+    <string name="hello_world">Hello world!</string>
+    <string name="demo_app_name_pdf">drive-pdf</string>
+    <string name="demo_pdf_pre_page">上一页</string>
+    <string name="demo_pdf_next_page">下一页</string>
+    <string name="demo_pdf_max">放大</string>
+    <string name="demo_pdf_min">缩小</string>
+    <string name="demo_pdf_file_no_exist">文件不存在</string>
+
+
+</resources>
