@@ -43,10 +43,25 @@
 
     <dependencies>
         <dependency>
+            <groupId>org.roboguice</groupId>
+            <artifactId>roboguice</artifactId>
+            <version>3.0-alpha-2</version>
+            <exclusions>
+                <exclusion>
+                    <groupId>android.support</groupId>
+                    <artifactId>compatibility-v4</artifactId>
+                </exclusion>
+                <exclusion>
+                    <groupId>android.support</groupId>
+                    <artifactId>compatibility-v7-appcompat</artifactId>
+                </exclusion>
+            </exclusions>
+        </dependency>
+        <dependency>
             <groupId>com.goodow.drive</groupId>
             <artifactId>drive-android-pdf</artifactId>
             <version>0.0.1-SNAPSHOT</version>
-            <type>aar</type>
+            <type>apklib</type>
         </dependency>
         <dependency>
             <groupId>com.google.android</groupId>

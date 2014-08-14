@@ -1,23 +1,39 @@
 package com.example.androidcase;
 
 import android.app.Activity;
-import android.content.Intent;
 import android.os.Bundle;
-import com.goodow.realtime.json.Json;
+import android.view.View;
+import android.widget.Toast;
 
 public class MainActivity extends Activity {
 
+  SingleDownload bar;
   @Override
   protected void onCreate(Bundle savedInstanceState) {
     super.onCreate(savedInstanceState);
-      try {
-          Intent intent = new Intent(this, PDFActivity.class);
-          intent.putExtra("msg", Json.createObject().set("path", "/mnt/sdcard/git.pdf"));
-          intent.setFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP | Intent.FLAG_ACTIVITY_NEW_TASK);
-          this.startActivity(intent);
-          this.finish();
-      } catch (Exception e){
-          e.printStackTrace();
-      }
+      this.setContentView(R.layout.activity_main);
+      bar = (SingleDownload) this.findViewById(R.id.xxx);
+      bar.setText("点击下载");
+      bar.setTextSize(30);
+      bar.setTextColor("#FF00FF");
+
+      bar.setClickable(true);
+      bar.setOnClickListener(new View.OnClickListener() {
+          @Override
+          public void onClick(View v) {
+              bar.startDownload("http://192.168.11.244/down/FileDownService?filename=abc.zip","/mnt/sdcard/jpg.jpg",new ButtonProgressBar.OnButtonProgressListener() {
+                  @Override
+                  public void finish() {
+                      try{
+//                          bar.setText("下载完成");
+//                          bar.setProgress(bar.getMax());
+                          Toast.makeText(MainActivity.this,"OK",1).show();
+                      } catch (Exception e){
+                          e.printStackTrace();
+                      }
+                  }
+              });
+          }
+      });
   }
 }

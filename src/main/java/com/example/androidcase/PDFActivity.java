@@ -3,7 +3,6 @@ package com.example.androidcase;
 import android.app.Activity;
 import android.content.Intent;
 import android.content.res.Configuration;
-import android.graphics.Canvas;
 import android.graphics.PointF;
 import android.os.Bundle;
 import android.os.Handler;
@@ -16,8 +15,6 @@ import com.goodow.realtime.channel.Bus;
 import com.goodow.realtime.json.Json;
 import com.goodow.realtime.json.JsonObject;
 import com.google.inject.Inject;
-import com.joanzapata.pdfview.PDFView;
-import com.joanzapata.pdfview.listener.OnDrawListener;
 import com.joanzapata.pdfview.listener.OnLoadCompleteListener;
 import com.joanzapata.pdfview.listener.OnPageChangeListener;
 
@@ -26,8 +23,8 @@ import java.io.File;
 /**
  * Created by dpw on 7/8/14.
  */
-public class PDFActivity extends Activity implements View.OnClickListener, OnLoadCompleteListener, OnPageChangeListener, OnDrawListener {
-    private PDFView pdfView;
+public class PDFActivity extends Activity implements View.OnClickListener, OnLoadCompleteListener, OnPageChangeListener {
+    private DriveAndroidJZPdfView pdfView;
     private float currentScale = 2.4f;
     private int currentPage = 0;
     @Inject
@@ -84,13 +81,6 @@ public class PDFActivity extends Activity implements View.OnClickListener, OnLoa
     }
 
     /*
-     * override PDFVIEW LIB invoke when draw
-     */
-    @Override
-    public void onLayerDrawn(Canvas canvas, float pageWidth, float pageHeight, int displayedPage) {
-    }
-
-    /*
      * override PDFVIEW LIB invoke when page change
      */
     @Override
@@ -102,7 +92,7 @@ public class PDFActivity extends Activity implements View.OnClickListener, OnLoa
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_pdf_demo);
-        pdfView = (PDFView) findViewById(R.id.pdfView_demo);
+        pdfView = (DriveAndroidJZPdfView) findViewById(R.id.pdfView_demo);
         this.buildPdfView(this.getIntent());
     }
 
@@ -126,8 +116,6 @@ public class PDFActivity extends Activity implements View.OnClickListener, OnLoa
         super.onRestoreInstanceState(savedInstanceState);
     }
 
-
-
     @Override
     protected void onSaveInstanceState(Bundle outState) {
         outState.putFloat("currentScale", this.currentScale);
@@ -142,7 +130,7 @@ public class PDFActivity extends Activity implements View.OnClickListener, OnLoa
         JsonObject jsonObject = (JsonObject) intent.getExtras().getSerializable("msg");
         File newFile = new File(jsonObject.getString("path"));
         if (newFile.exists()) {
-            pdfView.fromFile(newFile).defaultPage(1).onDraw(this).onLoad(this).onPageChange(this).load();
+            pdfView.fromFile(newFile).defaultPage(1).onLoad(this).onPageChange(this).load();
         } else {
             Toast.makeText(this, this.getString(R.string.demo_pdf_file_no_exist), Toast.LENGTH_SHORT).show();
         }
