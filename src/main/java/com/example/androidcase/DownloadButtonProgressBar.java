@@ -11,7 +11,7 @@ import android.widget.ProgressBar;
 /**
  * Created by dpw on 8/12/14.
  */
-public class ButtonProgressBar extends ProgressBar {
+public class DownloadButtonProgressBar extends ProgressBar {
 
     private String text;
     private int textSize = 18;
@@ -19,24 +19,23 @@ public class ButtonProgressBar extends ProgressBar {
     private Paint mPaint;
     private Canvas canvas;
 
-    public ButtonProgressBar(Context context) {
+    public DownloadButtonProgressBar(Context context) {
         super(context);
         initText();
     }
 
-    public ButtonProgressBar(Context context, AttributeSet attrs, int defStyle) {
+    public DownloadButtonProgressBar(Context context, AttributeSet attrs, int defStyle) {
         super(context, attrs, defStyle);
         initText();
     }
 
-    public ButtonProgressBar(Context context, AttributeSet attrs) {
+    public DownloadButtonProgressBar(Context context, AttributeSet attrs) {
         super(context, attrs);
         initText();
     }
 
     @Override
     public void setProgress(int progress) {
-//        setText(progress);
         super.setProgress(progress);
     }
 

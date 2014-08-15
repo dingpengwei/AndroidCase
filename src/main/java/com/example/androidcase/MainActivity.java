@@ -7,12 +7,12 @@ import android.widget.Toast;
 
 public class MainActivity extends Activity {
 
-  SingleDownload bar;
+  DownloadSingle bar;
   @Override
   protected void onCreate(Bundle savedInstanceState) {
     super.onCreate(savedInstanceState);
       this.setContentView(R.layout.activity_main);
-      bar = (SingleDownload) this.findViewById(R.id.xxx);
+      bar = (DownloadSingle) this.findViewById(R.id.xxx);
       bar.setText("点击下载");
       bar.setTextSize(30);
       bar.setTextColor("#FF00FF");
@@ -21,7 +21,7 @@ public class MainActivity extends Activity {
       bar.setOnClickListener(new View.OnClickListener() {
           @Override
           public void onClick(View v) {
-              bar.startDownload("http://192.168.11.244/down/FileDownService?filename=abc.zip","/mnt/sdcard/jpg.jpg",new ButtonProgressBar.OnButtonProgressListener() {
+              bar.startDownload("http://192.168.11.244/down/FileDownService?filename=abc.zip","/mnt/sdcard/jpg.jpg",new DownloadButtonProgressBar.OnButtonProgressListener() {
                   @Override
                   public void finish() {
                       try{
