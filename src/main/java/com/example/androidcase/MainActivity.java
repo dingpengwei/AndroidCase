@@ -7,12 +7,12 @@ import android.widget.Toast;
 
 public class MainActivity extends Activity {
 
-  DownloadSingle bar;
+  DownloadUtil bar;
   @Override
   protected void onCreate(Bundle savedInstanceState) {
     super.onCreate(savedInstanceState);
       this.setContentView(R.layout.activity_main);
-      bar = (DownloadSingle) this.findViewById(R.id.xxx);
+      bar = (DownloadUtil) this.findViewById(R.id.xxx);
       bar.setText("点击下载");
       bar.setTextSize(30);
       bar.setTextColor("#FF00FF");

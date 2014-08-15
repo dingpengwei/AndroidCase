@@ -15,17 +15,17 @@ import java.text.NumberFormat;
 /**
  * Created by dpw on 8/12/14.
  */
-public class DownloadSingle extends DownloadButtonProgressBar {
+public class DownloadUtil extends DownloadButtonProgressBar {
 
-    public DownloadSingle(Context context) {
+    public DownloadUtil(Context context) {
         super(context);
     }
 
-    public DownloadSingle(Context context, AttributeSet attrs, int defStyle) {
+    public DownloadUtil(Context context, AttributeSet attrs, int defStyle) {
         super(context, attrs, defStyle);
     }
 
-    public DownloadSingle(Context context, AttributeSet attrs) {
+    public DownloadUtil(Context context, AttributeSet attrs) {
         super(context, attrs);
     }
 
@@ -34,10 +34,10 @@ public class DownloadSingle extends DownloadButtonProgressBar {
     }
 
     class DownloadTask extends AsyncTask<String,Integer,OnButtonProgressListener> {
-        private DownloadSingle singleDownload;
+        private DownloadUtil singleDownload;
         private OnButtonProgressListener onButtonProgressListener;
 
-        public DownloadTask(DownloadSingle singleDownload,OnButtonProgressListener buttonProgressListener,String... params) {
+        public DownloadTask(DownloadUtil singleDownload,OnButtonProgressListener buttonProgressListener,String... params) {
             super();
             this.singleDownload = singleDownload;
             this.onButtonProgressListener = buttonProgressListener;
