@@ -81,7 +81,9 @@ public class DownloadButtonProgressBar extends ProgressBar {
 
 
     public interface OnButtonProgressListener {
-        void finish();
+        String message = null;
+        void error(String message);
+        void finish(String message);
     };
 
 

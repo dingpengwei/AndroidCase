@@ -29,45 +29,45 @@ public class DownloadSingle extends DownloadButtonProgressBar {
         super(context, attrs);
     }
 
-    public void startDownload(String remoteFilePath,String localFilePath,OnButtonProgressListener onButtonProgress){
-        new DownloadTask(remoteFilePath,localFilePath,this,onButtonProgress);
+    public void startDownload(OnButtonProgressListener onButtonProgress,String... params){
+        new DownloadTask(this,onButtonProgress,params);
     }
 
     class DownloadTask extends AsyncTask<String,Integer,OnButtonProgressListener> {
-        private String remoteFilePath;
-        private String localFilePath;
         private DownloadSingle singleDownload;
         private OnButtonProgressListener onButtonProgressListener;
 
-        public DownloadTask(String remoteFilePath,String localFilePath,DownloadSingle singleDownload,OnButtonProgressListener buttonProgressListener) {
+        public DownloadTask(DownloadSingle singleDownload,OnButtonProgressListener buttonProgressListener,String... params) {
             super();
-            this.remoteFilePath = remoteFilePath;
-            this.localFilePath = localFilePath;
             this.singleDownload = singleDownload;
             this.onButtonProgressListener = buttonProgressListener;
-            this.execute(this.remoteFilePath);
+            this.execute(params);
         }
 
         @Override
         protected OnButtonProgressListener doInBackground(String... params) {
-            try {
-                URL url = new URL(this.remoteFilePath);
-                URLConnection con = url.openConnection();
-                int contentLength = con.getContentLength();
-                this.singleDownload.setMax(contentLength);
-                InputStream is = con.getInputStream();
-                byte[] bs = new byte[1024];
-                int len;
-                OutputStream os = new FileOutputStream(new File(this.localFilePath));
-                while ((len = is.read(bs)) != -1) {
-                    os.write(bs, 0, len);
-                    this.publishProgress(len);
+            int length = params.length;
+            for(int i=0;i<=length;i= i + 2){
+                try {
+                    URL url = new URL(params[i]);
+                    URLConnection con = url.openConnection();
+                    int contentLength = con.getContentLength();
+                    this.singleDownload.setProgress(0);
+                    this.singleDownload.setMax(contentLength);
+                    InputStream is = con.getInputStream();
+                    byte[] bs = new byte[1024];
+                    int len;
+                    OutputStream os = new FileOutputStream(new File(params[i + 1]));
+                    while ((len = is.read(bs)) != -1) {
+                        os.write(bs, 0, len);
+                        this.publishProgress(i/2+1,length/2,len,contentLength);
+                    }
+                    os.close();
+                    is.close();
+                } catch (Exception e){
+                    System.out.print(e.getMessage());
+                    e.printStackTrace();
                 }
-                os.close();
-                is.close();
-            }catch (Exception e){
-                System.out.print(e.getMessage());
-                e.printStackTrace();
             }
             return this.onButtonProgressListener;
         }
@@ -76,7 +76,7 @@ public class DownloadSingle extends DownloadButtonProgressBar {
         protected void onPostExecute(OnButtonProgressListener onButtonProgressListener) {
             super.onPostExecute(onButtonProgressListener);
             if(this.onButtonProgressListener != null){
-                this.onButtonProgressListener.finish();
+                this.onButtonProgressListener.finish(null);
             }
         }
 
@@ -84,12 +84,12 @@ public class DownloadSingle extends DownloadButtonProgressBar {
         protected void onProgressUpdate(Integer... values) {
             super.onProgressUpdate(values);
 
-            float percent = ((float)(this.singleDownload.getProgress() + values[0]) / (float) this.singleDownload.getMax());
+            float percent = ((float)(this.singleDownload.getProgress() + values[2]) / (float) values[3]);
             NumberFormat nt = NumberFormat.getPercentInstance();
             nt.setMinimumFractionDigits(2);
 
-            this.singleDownload.setText("正在下载:" + nt.format(percent));
-            this.singleDownload.setProgress(this.singleDownload.getProgress() + values[0]);
+            this.singleDownload.setText("下载个数:" + String.valueOf(values[0]) + "/" + String.valueOf(values[1]) + " 下载进度：" + nt.format(percent));
+            this.singleDownload.setProgress(this.singleDownload.getProgress() + values[2]);
         }
     }
 }

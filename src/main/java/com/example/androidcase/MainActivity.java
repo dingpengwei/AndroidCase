@@ -21,18 +21,25 @@ public class MainActivity extends Activity {
       bar.setOnClickListener(new View.OnClickListener() {
           @Override
           public void onClick(View v) {
-              bar.startDownload("http://192.168.11.244/down/FileDownService?filename=abc.zip","/mnt/sdcard/jpg.jpg",new DownloadButtonProgressBar.OnButtonProgressListener() {
+              bar.startDownload(new DownloadButtonProgressBar.OnButtonProgressListener() {
                   @Override
-                  public void finish() {
+                  public void finish(String message) {
                       try{
-//                          bar.setText("下载完成");
-//                          bar.setProgress(bar.getMax());
+                          bar.setText("下载完成");
+                          bar.setProgress(0);
                           Toast.makeText(MainActivity.this,"OK",1).show();
-                      } catch (Exception e){
+                      } catch (Exception e) {
                           e.printStackTrace();
                       }
                   }
-              });
+
+                  @Override
+                  public void error(String message) {
+
+                  }
+              },"http://192.168.11.244/down/FileDownService?filename=keruixing.db","/mnt/sdcard/xxx1.jpg",
+                      "http://192.168.11.244/down/FileDownService?filename=keruixing.db","/mnt/sdcard/xxx2.jpg",
+                      "http://192.168.11.244/down/FileDownService?filename=keruixing.db","/mnt/sdcard/xxx3.jpg");
           }
       });
   }
